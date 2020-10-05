@@ -34,8 +34,11 @@ print("<p>Ім'я: {}</p>".format(text1))
 print("<p>Прізвище: {}</p>".format(text2))
 
 print("<p>Музика:</p>")
-for elem in option:
-    print("<p>{}</p>".format(elem))
+if type(option) is str:
+    print("<p>{}</p>".format(option).__str__())
+else:
+    for elem in option:
+        print("<p>{}</p>".format(elem))
 
 print("<p>Любимий богатир: {}</p>".format(radio))
 
