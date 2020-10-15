@@ -15,3 +15,8 @@ def to_home():
 @app.route('/about')
 def to_about():
 	return render_template('about.html')
+
+
+@app.route('/contacts')
+def to_contacts():
+	return render_template('contacts.html')
