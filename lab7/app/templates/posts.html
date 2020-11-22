@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+    <li><a href="{{ url_for('add_post') }}">New post</a></li>
+            
+    {% endif %}
+    {% for post in posts %}
+    <div class="card text-center">
+        <div class="card-header">
+            {{post.author.username}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{post.title}}</h5>
+          <p class="card-text">{{post.body}}</p>
+          {% if current_user.username == post.author.username %}
+        <a href="{{url_for('post', post_id=post.id)}}" class="btn btn-primary">change</a>
+        {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+          Posted: {{post.timestamp}} Updated: {{post.updatetime}}
+        </div>
+      </div>
+
+    {% endfor %}
+{% endblock %}

@@ -1,8 +1,8 @@
-"""users & posts tables
+"""add title for posts
 
-Revision ID: 32c70db9f11e
+Revision ID: f5bfaf8c5a23
 Revises: 
-Create Date: 2020-11-15 21:49:57.331184
+Create Date: 2020-11-21 18:33:01.247020
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '32c70db9f11e'
+revision = 'f5bfaf8c5a23'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,8 +32,10 @@ def upgrade():
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
     op.create_table('post',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=100), nullable=True),
     sa.Column('body', sa.String(length=140), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
+    sa.Column('updatetime', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')

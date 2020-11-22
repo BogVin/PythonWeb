@@ -66,3 +66,14 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('Username already registered')
 
 
+class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    body = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Add  new post')
+
+
+class UpdatePostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    body = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Update')
+    submit2 = SubmitField('Delate Post')

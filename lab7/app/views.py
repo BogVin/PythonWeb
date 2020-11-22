@@ -1,12 +1,13 @@
 from flask import render_template, flash , redirect, url_for, request
 from app import app, bcrypt, db
-from app.forms import LoginForm, RegistrationForm, UpdateAccountForm
+from app.forms import LoginForm, RegistrationForm, UpdateAccountForm, PostForm, UpdatePostForm
 from .models import User, Post
 from flask_login import current_user, login_user, logout_user, login_required
 import secrets
 from datetime import datetime
 import os
 from PIL import Image
+from datetime import datetime as dt
 
 @app.route('/')
 def to_main():
@@ -108,3 +109,43 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
+
+
+@app.route('/post/new', methods=['GET', 'POST'])
+@login_required
+def add_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, body=form.body.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash("Post was created", category="info")
+        return redirect(url_for('posts'))
+
+    return render_template('create_post.html', form=form)
+
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    form = UpdatePostForm()
+
+    if current_user.username != post.author.username:
+        flash("Its not your post", category="eror")
+        return redirect(url_for('posts'))
+
+    elif form.validate_on_submit():
+        post.title = form.title.data
+        post.body = form.body.data
+        post.updatetime = datetime.utcnow()
+        db.session.commit()
+        flash("Post was updated", category="info")
+        return redirect(url_for('post', post_id=post.id))
+
+    elif "delete" in request.form:
+        db.session.delete(post)
+        db.session.commit()
+        flash("Post deleted", category="eror")
+        return redirect(url_for('posts'))
+
+    return render_template('post.html', post=post, form=form)
