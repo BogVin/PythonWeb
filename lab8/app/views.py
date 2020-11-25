@@ -53,9 +53,21 @@ def register():
         return redirect(url_for('to_main'))
     return render_template('register.html', form=form)
 
+
+ROWS_PER_PAGE = 2
 @app.route('/posts')
 def posts():
-    posts = Post.query.all()
+    q = request.args.get('q')
+
+    
+    if q:
+        posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q))
+    else:
+        posts = Post.query.order_by(Post.timestamp.desc())
+
+    page = request.args.get('page', 1, type=int)
+    posts = posts.paginate(page=page, per_page=ROWS_PER_PAGE)
+    
     return render_template('posts.html', posts=posts)
 
 
@@ -149,3 +161,10 @@ def post(post_id):
         return redirect(url_for('posts'))
 
     return render_template('post.html', post=post, form=form)
+
+
+@app.route('/post/delete/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def delete_post(post_id):
+    pass
+
