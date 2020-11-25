@@ -68,7 +68,7 @@ def posts():
     page = request.args.get('page', 1, type=int)
     posts = posts.paginate(page=page, per_page=ROWS_PER_PAGE)
     
-    return render_template('posts.html', posts=posts)
+    return render_template('posts.html', posts=posts, q=q)
 
 
 @app.route('/logout')
