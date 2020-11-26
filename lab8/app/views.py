@@ -9,6 +9,7 @@ import os
 from PIL import Image
 from datetime import datetime as dt
 
+from config import ROWS_PER_PAGE
 @app.route('/')
 def to_main():
 	return render_template('layout.html')
@@ -54,12 +55,10 @@ def register():
     return render_template('register.html', form=form)
 
 
-ROWS_PER_PAGE = 2
-@app.route('/posts')
+
+@app.route('/posts',methods=['GET', 'POST'])
 def posts():
     q = request.args.get('q')
-
-    
     if q:
         posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q))
     else:

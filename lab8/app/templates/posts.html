@@ -5,6 +5,11 @@
     <li><a href="{{ url_for('add_post') }}">New post</a></li>
             
     {% endif %}
+    <form>
+      <input type='text', name='q',  {% if request.args.get('q') != None %}
+      value="{{request.args.get('q')}}" {%endif%}>
+      <button type='submit'> Search</button>
+    </form>
     {% for post in posts.items %}
     <div class="card text-center">
         <div class="card-header">
