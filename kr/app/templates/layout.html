@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flask app</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">   
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+  </head >
+
+  <body>
+    
+    <header>
+      
+      <div class="container">
+        <h1 class="logo">your advertising could be here</h1>
+        {% for cat, msg in get_flashed_messages(True) %}
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-{{cat}}">{{msg}}</li>
+    </ul>
+    {%endfor %}
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('add_product') }}">Add new product</a></li>
+            <li><a href="{{ url_for('products') }}">Products</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

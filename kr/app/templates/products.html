@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form>
+    <input type='text', name='q',  {% if request.args.get('q') != None %}
+    value="{{request.args.get('q')}}" {%endif%}>
+    <button type='submit'> Search</button>
+  </form>
+{% for product in products %}
+
+    <div class="card text-center">
+        <p>Code: {{product.code}}</p>
+        <p> Name: {{product.name}}</p>
+        <p> Is Avalibule:{{product.instock}}</p>
+        <p>Number of products :{{product.number}}</p>
+        <p>Cost: {{product.cost}}</p>
+        <p> Description: {{product.description}}</p>
+        <p> Category: {{product.category}}</p>
+        <a href="{{url_for('product', product_id=product.id)}}" class="btn btn-primary">change</a>
+      </div>
+
+    {% endfor %}
+{% endblock %}

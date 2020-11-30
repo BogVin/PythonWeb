@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<li><a href="{{ url_for('delete_product', product_id=product.id) }}">Delete</a></li>
+    <div class="card text-center">
+        <p>Code: {{product.code}}</p>
+        <p> Name: {{product.name}}</p>
+        <p> Is Avalibule:{{product.instock}}</p>
+        <p>Number of products :{{product.number}}</p>
+        <p>Cost: {{product.cost}}</p>
+        <p> Description: {{product.description}}</p>
+        <p> Category: {{product.category}}</p>
+      </div>
+      <h1>Update Product</h1>
+      {% from "_render_field.html" import render_field %}
+      <form action="{{url_for('product', product_id=product.id)}}" method="post" novalidate>
+          {{ form.hidden_tag() }}
+          {{ render_field(form.code) }}
+          {{ render_field(form.name) }}
+          {{ render_field(form.instock) }}
+          {{ render_field(form.number) }}
+          {{ render_field(form.cost) }}
+          {{ render_field(form.description) }}
+          {{ render_field(form.category) }}
+          <p>{{ form.submit(class='btn btn-primary') }}</p>
+      </form>
+{% endblock %}
