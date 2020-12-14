@@ -24,13 +24,13 @@
             <li><a href="{{ url_for('auth.login') }}">Login</a></li>
             <li><a href="{{ url_for('auth.register') }}">register</a></li>
             {% else %}
-            <li><a href="{{ url_for('auth.register') }}">register</a></li>
-            <li><a href="{{ url_for('account.account') }}">account</a></li>
-            <li><a href="{{ url_for('auth.logout') }}">logout</a></li>
+            <li><a href="{{ url_for('register') }}">register</a></li>
+            <li><a href="{{ url_for('account') }}">account</a></li>
+            <li><a href="{{ url_for('logout') }}">logout</a></li>
             
             {% endif %}
-            <li><a href="{{ url_for('general.to_main') }}">main</a></li>
-            <li><a href="{{ url_for('posts.posts') }}">posts</a></li>
+            <li><a href="{{ url_for('.to_main') }}">main</a></li>
+            <li><a href="{{ url_for('posts') }}">posts</a></li>
 
           </ul>
         </nav></strong>

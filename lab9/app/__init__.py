@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 login = LoginManager(app)
-login.login_view = 'login'
+login.login_view = 'auth.login'
 login.login_message_category = 'info'
 login.session_protection = 'strong'
 
@@ -28,4 +28,16 @@ import app.forms as  fr
 admin.add_view(fr.UserAdminView(User, db.session))
 admin.add_view(fr.PostAdminView(Post, db.session))
 
-from app import views, models
+from app import  models
+
+from app.blueprints.general.views import general_blueprint
+from app.blueprints.auth.views import auth_blueprint
+from app.blueprints.post.views import post_blueprint
+from app.blueprints.administrator.views import administrator_blueprint
+from app.blueprints.accaunt.views import accaunt_blueprint
+
+app.register_blueprint(general_blueprint)
+app.register_blueprint(auth_blueprint)
+app.register_blueprint(post_blueprint)
+app.register_blueprint(administrator_blueprint)
+app.register_blueprint(accaunt_blueprint)
